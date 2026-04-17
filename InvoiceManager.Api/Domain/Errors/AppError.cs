@@ -1,8 +1,9 @@
-﻿using System.Linq.Expressions;
+﻿using InvoiceManager.Api.Wrappers;
+using System.Linq.Expressions;
 using System.Net;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text.Json;
 
-namespace InvoiceManager.Api.Wrappers.ResultPattern
+namespace InvoiceManager.Api.Domain.Errors
 {
     public record AppError(string Menssage, string? Property = null)
     {
@@ -36,10 +37,8 @@ namespace InvoiceManager.Api.Wrappers.ResultPattern
 
         public static AppResponse InternalServerError(this AppError error)
             => new() { Successed = false, HttpStatusCode = HttpStatusCode.InternalServerError, Errors = [error] };
-    }
-
-    public static class TicketErrors
-    {
         
+        public static string ToString(this AppError error)
+            => JsonSerializer.Serialize(error);
     }
 }

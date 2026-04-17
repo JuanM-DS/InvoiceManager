@@ -1,19 +1,28 @@
-﻿using InvoiceManager.Api.Persistence.EFContext;
+﻿using InvoiceManager.Api.Domain.Interfaces;
+using InvoiceManager.Api.Infrastructure;
+using InvoiceManager.Api.Middlewares;
+using InvoiceManager.Api.Persistence.EFContext;
 using InvoiceManager.Api.Persistence.EFContext.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Serilog;
 
-namespace InvoiceManager.Api.Decorator.ServicesCollection
+namespace InvoiceManager.Api.Decorator
 {
     public static class ServiceCollectionExt
     {
         public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDataDescriptors(configuration);
+            services.AddExceptionHandler<GlobalExceptionHandler>()
+                    .AddDataBaseDescriptors(configuration)
+                    .AddScoped<ILogService, LogService>();
+
+            AddSeriLogConfigurations();
+            
             return services;
         }
 
-        private static IServiceCollection AddDataDescriptors(this IServiceCollection services, IConfiguration configuration)
+        private static IServiceCollection AddDataBaseDescriptors(this IServiceCollection services, IConfiguration configuration)
         {
             #region configurations
             var connectionString = configuration.GetConnectionString("MainConnectionString");
@@ -22,7 +31,7 @@ namespace InvoiceManager.Api.Decorator.ServicesCollection
             #endregion
 
             #region interceptors
-            services.AddScoped<IInterceptor,SaveAuditableInterceptor>();
+            services.AddScoped<IInterceptor, SaveAuditableInterceptor>();
             #endregion
 
             #region dbcontext
@@ -35,8 +44,17 @@ namespace InvoiceManager.Api.Decorator.ServicesCollection
                 .AddInterceptors(interceptors);
             });
             #endregion
-            
+
             return services;
+        }
+
+        private static void AddSeriLogConfigurations()
+        {
+                Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Verbose()
+                    .WriteTo.Console()
+                    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
         }
     }
 }
