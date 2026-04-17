@@ -1,4 +1,4 @@
-﻿using InvoiceManager.Api.Wrappers;
+﻿using InvoiceManager.Api.Shared.Wrappers;
 using System.Linq.Expressions;
 using System.Net;
 using System.Text.Json;

@@ -1,7 +1,9 @@
-﻿namespace InvoiceManager.Api.Domain.Interfaces
+﻿using InvoiceManager.Api.Shared.Dtos;
+
+namespace InvoiceManager.Api.Domain.Interfaces
 {
     public interface IExcelService
     {
-        //public byte[] GenerateExcelFile<T>(IEnumerable<T> data, string sheetName);
+        public byte[] GenerateExcelFile(List<InvoiceTemplateDto> modeltemplates);
     }
 }

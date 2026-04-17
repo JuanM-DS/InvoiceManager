@@ -1,13 +1,13 @@
-﻿using InvoiceManager.Api.Domain.Interfaces;
+﻿using InvoiceManager.Api.Api.Middlewares;
+using InvoiceManager.Api.Domain.Interfaces;
 using InvoiceManager.Api.Infrastructure;
-using InvoiceManager.Api.Middlewares;
 using InvoiceManager.Api.Persistence.EFContext;
 using InvoiceManager.Api.Persistence.EFContext.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Serilog;
 
-namespace InvoiceManager.Api.Decorator
+namespace InvoiceManager.Api.Api.Decorator
 {
     public static class ServiceCollectionExt
     {

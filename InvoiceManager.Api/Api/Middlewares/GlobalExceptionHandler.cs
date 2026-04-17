@@ -1,9 +1,9 @@
 ﻿using InvoiceManager.Api.Domain.Errors;
 using InvoiceManager.Api.Domain.Interfaces;
-using InvoiceManager.Api.Wrappers;
+using InvoiceManager.Api.Shared.Wrappers;
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace InvoiceManager.Api.Middlewares
+namespace InvoiceManager.Api.Api.Middlewares
 {
     public class GlobalExceptionHandler(ILogService logService) : IExceptionHandler
     {

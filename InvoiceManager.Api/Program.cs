@@ -1,4 +1,4 @@
-using InvoiceManager.Api.Decorator;
+using InvoiceManager.Api.Api.Decorator;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApiServices(builder.Configuration);

@@ -1,7 +1,7 @@
 ﻿using InvoiceManager.Api.Domain.Errors;
 using System.Net;
 
-namespace InvoiceManager.Api.Wrappers
+namespace InvoiceManager.Api.Shared.Wrappers
 {
     public class AppResponse
     {

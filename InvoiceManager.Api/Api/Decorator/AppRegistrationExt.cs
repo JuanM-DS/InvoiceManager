@@ -1,4 +1,4 @@
-﻿namespace InvoiceManager.Api.Decorator
+﻿namespace InvoiceManager.Api.Api.Decorator
 {
     public static class AppRegistrationExt
     {
