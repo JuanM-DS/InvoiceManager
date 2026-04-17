@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/Src/">
+    <Project Path="InvoiceManager.Api/InvoiceManager.Api.csproj" />
+  </Folder>
+</Solution>
