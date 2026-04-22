@@ -24,6 +24,7 @@ namespace InvoiceManager.Api.Persistence.EFContext.Configurations
             builder.Property(x => x.Name).HasMaxLength(150).IsRequired();
             builder.Property(x => x.HeadMasterName).HasMaxLength(150).IsRequired();
             builder.Property(x => x.RationsNumber).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.Order).IsRequired();
             builder.Property(x => x.AddressId).IsRequired();
             builder.Property(x => x.PhoneNumberId).IsRequired();
 

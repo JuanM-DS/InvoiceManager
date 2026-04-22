@@ -11,11 +11,13 @@ namespace InvoiceManager.Api.Persistence.EFContext
         public DbSet<Product> Products { get; set; }
         public DbSet<School> Schools { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
+        public DbSet<Contract> Contracts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(MainContext).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

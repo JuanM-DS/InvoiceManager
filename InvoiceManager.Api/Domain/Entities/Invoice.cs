@@ -9,8 +9,10 @@ namespace InvoiceManager.Api.Domain.Entities
         public Guid SchoolId { get; set; }
         public Guid SupplierId { get; set; }
         public Guid ProductId { get; set; }
+        public Guid ContractId { get; set; }
 
         public School School { get; set; } = null!;
+        public Contract Contract { get; set; } = null!;
         public Supplier Supplier { get; set; } = null!;
         public Product Product { get; set; } = null!;
 

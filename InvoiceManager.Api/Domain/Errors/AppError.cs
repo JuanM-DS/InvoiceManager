@@ -1,7 +1,7 @@
 ﻿using InvoiceManager.Api.Shared.Wrappers;
 using System.Linq.Expressions;
 using System.Net;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text.Json;
 
 namespace InvoiceManager.Api.Domain.Errors
 {
@@ -40,7 +40,5 @@ namespace InvoiceManager.Api.Domain.Errors
         
         public static string ToString(this AppError error)
             => JsonSerializer.Serialize(error);
-    }
-        
     }
 }

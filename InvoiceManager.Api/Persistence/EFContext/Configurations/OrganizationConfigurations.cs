@@ -4,21 +4,21 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace InvoiceManager.Api.Persistence.EFContext.Configurations
 {
-    public class PhoneNumberConfigurations : IEntityTypeConfiguration<PhoneNumber>
+    public class OrganizationConfigurations : IEntityTypeConfiguration<Organization>
     {
-        public void Configure(EntityTypeBuilder<PhoneNumber> builder)
+        public void Configure(EntityTypeBuilder<Organization> builder)
         {
-            builder.ToTable("PhoneNumber");
+            builder.ToTable("Organization");
             builder.HasKey(x => x.Id)
                    .IsClustered();
             builder.Property(x => x.Id)
                    .ValueGeneratedOnAdd();
 
-            builder.Property(x => x.Number).IsRequired();
-            builder.Property(x => x.Type)
+            builder.Property(x => x.Name).HasMaxLength(150).IsRequired();
+            builder.Property(x => x.OrganizationType)
                    .IsRequired();
-
-            builder.Property(x => x.SupplierId).IsRequired();
+            builder.Property(x => x.ContractStatus)
+                   .IsRequired();
 
             builder.Property(x => x.CreatedAt).IsRequired();
             builder.Property(x => x.CreatedBy).HasMaxLength(150).IsRequired();

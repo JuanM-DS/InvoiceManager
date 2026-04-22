@@ -24,6 +24,12 @@ namespace InvoiceManager.Api.Persistence.EFContext.Configurations
             builder.Property(x => x.SchoolId).IsRequired();
             builder.Property(x => x.SupplierId).IsRequired();
             builder.Property(x => x.ProductId).IsRequired();
+            builder.Property(x => x.ContractId).IsRequired();
+
+            builder.HasOne(x => x.Contract)
+                .WithMany()
+                .HasForeignKey(x => x.ContractId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.School)
                 .WithMany()
