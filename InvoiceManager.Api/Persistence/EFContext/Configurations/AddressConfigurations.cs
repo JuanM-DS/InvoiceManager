@@ -9,7 +9,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Configurations
         public void Configure(EntityTypeBuilder<Address> builder)
         {
             builder.ToTable("Address");
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => x.Id)
+                   .IsClustered();
             builder.Property(x => x.Id)
                    .ValueGeneratedOnAdd();
 

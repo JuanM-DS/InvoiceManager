@@ -9,11 +9,18 @@ namespace InvoiceManager.Api.Persistence.EFContext.Configurations
         public void Configure(EntityTypeBuilder<Invoice> builder)
         {
             builder.ToTable("Invoice");
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => x.Id)
+                   .IsClustered();
             builder.Property(x => x.Id)
                    .ValueGeneratedOnAdd();
 
+            builder.HasIndex(x => x.InvoiceNumber)
+                .IsUnique();
+
             builder.Property(x => x.RationsDelivered).IsRequired();
+            builder.Property(x => x.InvoiceNumber)
+                   .IsRequired()
+                   .ValueGeneratedOnAdd();
             builder.Property(x => x.SchoolId).IsRequired();
             builder.Property(x => x.SupplierId).IsRequired();
             builder.Property(x => x.ProductId).IsRequired();

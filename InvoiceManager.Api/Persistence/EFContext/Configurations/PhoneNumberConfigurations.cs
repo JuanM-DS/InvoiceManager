@@ -10,7 +10,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Configurations
         public void Configure(EntityTypeBuilder<PhoneNumber> builder)
         {
             builder.ToTable("PhoneNumber");
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => x.Id)
+                   .IsClustered();
             builder.Property(x => x.Id)
                    .ValueGeneratedOnAdd();
 

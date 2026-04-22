@@ -5,6 +5,7 @@ namespace InvoiceManager.Api.Domain.Entities
     public class Invoice : BaseEntity, IAuditable
     {
         public int RationsDelivered { get; set; }
+        public int InvoiceNumber { get; set; }
         public Guid SchoolId { get; set; }
         public Guid SupplierId { get; set; }
         public Guid ProductId { get; set; }

@@ -9,9 +9,16 @@ namespace InvoiceManager.Api.Persistence.EFContext.Configurations
         public void Configure(EntityTypeBuilder<School> builder)
         {
             builder.ToTable("School");
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => x.Id)
+                   .IsClustered();
             builder.Property(x => x.Id)
                    .ValueGeneratedOnAdd();
+
+            builder.HasIndex(x => x.Code)
+                .IsUnique();
+            
+            builder.HasIndex(x => x.AddressId)
+                .IsUnique();
 
             builder.Property(x => x.Code).IsRequired();
             builder.Property(x => x.Name).HasMaxLength(150).IsRequired();

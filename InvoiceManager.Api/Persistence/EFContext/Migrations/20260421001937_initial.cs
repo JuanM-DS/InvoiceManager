@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace InvoiceManager.Api.Persistence.EFContext.Migrations
+namespace InvoiceManager.Api.Persistence.EFContext
 {
     /// <inheritdoc />
-    public partial class initialmigration : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +29,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Address", x => x.Id);
+                    table.PrimaryKey("PK_Address", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,7 +47,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,7 +67,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Supplier", x => x.Id);
+                    table.PrimaryKey("PK_Supplier", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
                     table.ForeignKey(
                         name: "FK_Supplier_Address_AddresId",
                         column: x => x.AddresId,
@@ -90,7 +92,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PhoneNumber", x => x.Id);
+                    table.PrimaryKey("PK_PhoneNumber", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
                     table.ForeignKey(
                         name: "FK_PhoneNumber_Supplier_SupplierId",
                         column: x => x.SupplierId,
@@ -117,7 +120,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_School", x => x.Id);
+                    table.PrimaryKey("PK_School", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
                     table.ForeignKey(
                         name: "FK_School_Address_AddressId",
                         column: x => x.AddressId,
@@ -138,6 +142,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RationsDelivered = table.Column<int>(type: "int", nullable: false),
+                    InvoiceNumber = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     SchoolId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -148,7 +154,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invoice", x => x.Id);
+                    table.PrimaryKey("PK_Invoice", x => x.Id)
+                        .Annotation("SqlServer:Clustered", true);
                     table.ForeignKey(
                         name: "FK_Invoice_Product_ProductId",
                         column: x => x.ProductId,
@@ -168,6 +175,12 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoice_InvoiceNumber",
+                table: "Invoice",
+                column: "InvoiceNumber",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_ProductId",
@@ -192,7 +205,14 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_School_AddressId",
                 table: "School",
-                column: "AddressId");
+                column: "AddressId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_School_Code",
+                table: "School",
+                column: "Code",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_School_PhoneNumberId",
@@ -202,7 +222,20 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Supplier_AddresId",
                 table: "Supplier",
-                column: "AddresId");
+                column: "AddresId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Supplier_Email",
+                table: "Supplier",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Supplier_TaxNumber",
+                table: "Supplier",
+                column: "TaxNumber",
+                unique: true);
         }
 
         /// <inheritdoc />

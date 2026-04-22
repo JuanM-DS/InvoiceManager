@@ -1,5 +1,5 @@
 ﻿using InvoiceManager.Api.Domain.Common;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using InvoiceManager.Api.Domain.Enumerables;
 
 namespace InvoiceManager.Api.Domain.Entities
 {
@@ -9,10 +9,40 @@ namespace InvoiceManager.Api.Domain.Entities
         public string Name { get; set; } = string.Empty;
         public string HeadMasterName { get; set; } = string.Empty;
         public string RationsNumber { get; set; } = string.Empty;
+        // agregate
+        public int Order { get; set; }
         public Guid AddressId { get; set; }
         public Guid PhoneNumberId { get; set; }
         public PhoneNumber PhoneNumber { get; set; } = null!;
         public Address Address { get; set; } = null!;
+
+        #region Auditable
+        public DateTime CreatedAt { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
+        public DateTime? UpdatedAt { get; set; }
+        public string? UpdatedBy { get; set; }
+        #endregion
+    }
+
+    public class Contract : BaseEntity, IAuditable
+    {
+        public string Nombre { get; set; } = string.Empty;
+        public Organization Organization { get; set; } = null!;
+
+        #region Auditable
+        public DateTime CreatedAt { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
+        public DateTime? UpdatedAt { get; set; }
+        public string? UpdatedBy { get; set; }
+        #endregion
+    }
+
+    public class Organization : BaseEntity, IAuditable
+    {
+        public string Name { get; set; } = string.Empty;
+        public OrganizationType OrganizationType { get; set; }
+        public ContractStatus contractStatus { get; set; }
+
         #region Auditable
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; } = string.Empty;

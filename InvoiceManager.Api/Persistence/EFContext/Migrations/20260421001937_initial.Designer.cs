@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace InvoiceManager.Api.Persistence.EFContext.Migrations
+namespace InvoiceManager.Api.Persistence.EFContext
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20260417033315_initial migration")]
-    partial class initialmigration
+    [Migration("20260421001937_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,6 +83,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
 
                     b.HasKey("Id");
 
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
+
                     b.ToTable("Address", (string)null);
                 });
 
@@ -99,6 +101,12 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("InvoiceNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InvoiceNumber"));
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -120,6 +128,11 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
+
+                    b.HasIndex("InvoiceNumber")
+                        .IsUnique();
 
                     b.HasIndex("ProductId");
 
@@ -163,6 +176,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
 
                     b.HasKey("Id");
 
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
+
                     b.HasIndex("SupplierId");
 
                     b.ToTable("PhoneNumber", (string)null);
@@ -199,6 +214,8 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
 
                     b.ToTable("Product", (string)null);
                 });
@@ -250,7 +267,13 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
+
+                    b.HasIndex("AddressId")
+                        .IsUnique();
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.HasIndex("PhoneNumberId");
 
@@ -298,7 +321,16 @@ namespace InvoiceManager.Api.Persistence.EFContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddresId");
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
+
+                    b.HasIndex("AddresId")
+                        .IsUnique();
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("TaxNumber")
+                        .IsUnique();
 
                     b.ToTable("Supplier", (string)null);
                 });
