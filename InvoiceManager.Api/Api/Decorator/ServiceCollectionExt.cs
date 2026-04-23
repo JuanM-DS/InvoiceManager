@@ -25,8 +25,9 @@ namespace InvoiceManager.Api.Api.Decorator
         private static IServiceCollection AddDataBaseDescriptors(this IServiceCollection services, IConfiguration configuration)
         {
             #region configurations
-            var connectionString = configuration.GetConnectionString("MainConnectionString");
-            if (string.IsNullOrEmpty(connectionString))
+            var readConnectionString = configuration.GetConnectionString("ReadConnectionString");
+            var writeConnectionString = configuration.GetConnectionString("WriteConnectionString");
+            if (string.IsNullOrEmpty(readConnectionString) || string.IsNullOrEmpty(writeConnectionString))
                 throw new Exception("Connection string not found");
             #endregion
 
