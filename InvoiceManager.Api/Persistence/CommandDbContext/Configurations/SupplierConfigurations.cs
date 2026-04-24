@@ -2,7 +2,7 @@ using InvoiceManager.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InvoiceManager.Api.Persistence.EFContext.Configurations
+namespace InvoiceManager.Api.Persistence.CommandDbContext.Configurations
 {
     public class SupplierConfigurations : IEntityTypeConfiguration<Supplier>
     {
@@ -35,7 +35,7 @@ namespace InvoiceManager.Api.Persistence.EFContext.Configurations
 
             builder.HasMany(x => x.PhoneNumbers)
                 .WithOne()
-                .HasForeignKey(x => x.SupplierId)
+                .HasForeignKey(x => x.Id)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(x => x.CreatedAt).IsRequired();

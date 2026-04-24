@@ -7,7 +7,6 @@ namespace InvoiceManager.Api.Domain.Entities
     {
         public int Number { get; set; }
         public PhoneNumberType Type { get; set; }
-        public Guid SupplierId { get; set; }
 
         #region Auditable
         public DateTime CreatedAt { get; set; }

@@ -4,7 +4,7 @@ namespace InvoiceManager.Api.Domain.Entities
 {
     public class Contract : BaseEntity, IAuditable
     {
-        public string Nombre { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         public Organization Organization { get; set; } = null!;
 
         #region Auditable

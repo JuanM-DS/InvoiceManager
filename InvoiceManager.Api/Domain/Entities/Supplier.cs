@@ -10,7 +10,7 @@ namespace InvoiceManager.Api.Domain.Entities
         public Guid AddresId { get; set; }
 
         public Address Address { get; set; } = null!;
-        public ICollection<PhoneNumber> PhoneNumbers { get; set; } = System.Array.Empty<PhoneNumber>();
+        public ICollection<PhoneNumber> PhoneNumbers { get; set; } = [];
 
         #region Auditable
         public DateTime CreatedAt { get; set; }

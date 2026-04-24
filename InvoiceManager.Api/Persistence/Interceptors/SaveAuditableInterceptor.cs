@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace InvoiceManager.Api.Persistence.EFContext.Interceptors
+namespace InvoiceManager.Api.Persistence.Interceptors
 {
     public class SaveAuditableInterceptor : SaveChangesInterceptor
     {

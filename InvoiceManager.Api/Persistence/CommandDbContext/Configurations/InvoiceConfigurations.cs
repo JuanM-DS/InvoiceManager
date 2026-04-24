@@ -2,13 +2,13 @@ using InvoiceManager.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InvoiceManager.Api.Persistence.EFContext.Configurations
+namespace InvoiceManager.Api.Persistence.CommandDbContext.Configurations
 {
     public class InvoiceConfigurations : IEntityTypeConfiguration<Invoice>
     {
         public void Configure(EntityTypeBuilder<Invoice> builder)
         {
-            builder.ToTable("Invoice");
+            builder.ToTable("InvoiceModel");
             builder.HasKey(x => x.Id)
                    .IsClustered();
             builder.Property(x => x.Id)

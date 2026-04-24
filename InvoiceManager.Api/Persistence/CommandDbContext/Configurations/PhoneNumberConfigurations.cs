@@ -2,22 +2,20 @@ using InvoiceManager.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InvoiceManager.Api.Persistence.EFContext.Configurations
+namespace InvoiceManager.Api.Persistence.CommandDbContext.Configurations
 {
-    public class OrganizationConfigurations : IEntityTypeConfiguration<Organization>
+    public class PhoneNumberConfigurations : IEntityTypeConfiguration<PhoneNumber>
     {
-        public void Configure(EntityTypeBuilder<Organization> builder)
+        public void Configure(EntityTypeBuilder<PhoneNumber> builder)
         {
-            builder.ToTable("Organization");
+            builder.ToTable("PhoneNumber");
             builder.HasKey(x => x.Id)
                    .IsClustered();
             builder.Property(x => x.Id)
                    .ValueGeneratedOnAdd();
 
-            builder.Property(x => x.Name).HasMaxLength(150).IsRequired();
-            builder.Property(x => x.OrganizationType)
-                   .IsRequired();
-            builder.Property(x => x.ContractStatus)
+            builder.Property(x => x.Number).IsRequired();
+            builder.Property(x => x.Type)
                    .IsRequired();
 
             builder.Property(x => x.CreatedAt).IsRequired();

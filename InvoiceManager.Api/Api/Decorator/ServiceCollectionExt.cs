@@ -1,8 +1,9 @@
 ﻿using InvoiceManager.Api.Api.Middlewares;
 using InvoiceManager.Api.Domain.Interfaces;
 using InvoiceManager.Api.Infrastructure;
-using InvoiceManager.Api.Persistence.EFContext;
-using InvoiceManager.Api.Persistence.EFContext.Interceptors;
+using InvoiceManager.Api.Persistence.DbContexts;
+using InvoiceManager.Api.Persistence.Interceptors;
+using InvoiceManager.Api.Persistence.QueryDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Serilog;
@@ -35,14 +36,22 @@ namespace InvoiceManager.Api.Api.Decorator
             services.AddScoped<IInterceptor, SaveAuditableInterceptor>();
             #endregion
 
-            #region dbcontext
-            services.AddDbContext<MainContext>((sp, option) =>
+            #region dbcontexts
+            services.AddDbContextPool<CommandDbContext>((sp, option) =>
             {
                 var interceptors = sp.GetRequiredService<IInterceptor>();
 
-                option.UseSqlServer(connectionString,
-                    x => x.MigrationsAssembly(typeof(MainContext).Assembly))
+                option.UseSqlServer(writeConnectionString,
+                    x => x.MigrationsAssembly(typeof(CommandDbContext).Assembly))
                 .AddInterceptors(interceptors);
+            });
+
+            services.AddDbContextPool<QueryDbContext>(options =>
+            {
+                options.UseSqlServer(readConnectionString)
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .EnableDetailedErrors(false)
+                .EnableSensitiveDataLogging(false);
             });
             #endregion
 

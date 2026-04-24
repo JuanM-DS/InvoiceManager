@@ -24,16 +24,16 @@ public static class Error
 public static class Invoice
 {
     public static readonly AppError NotFound =
-        new("Invoice.NotFound", "Invoice not found.");
+        new("InvoiceModel.NotFound", "InvoiceModel not found.");
 
     public static readonly AppError AlreadyExists =
-        new("Invoice.AlreadyExists", "Invoice already exists.");
+        new("InvoiceModel.AlreadyExists", "InvoiceModel already exists.");
 
     public static readonly AppError CannotDelete =
-        new("Invoice.CannotDelete", "Invoice cannot be deleted.");
+        new("InvoiceModel.CannotDelete", "InvoiceModel cannot be deleted.");
 
     public static readonly AppError Conflict =
-        new("Invoice.Conflict", "Invoice is in an invalid state.");
+        new("InvoiceModel.Conflict", "InvoiceModel is in an invalid state.");
 }
 
 public static class Supplier
@@ -54,16 +54,16 @@ public static class Supplier
 public static class School
 {
     public static readonly AppError NotFound =
-        new("School.NotFound", "School not found.");
+        new("SchoolModel.NotFound", "SchoolModel not found.");
 
     public static readonly AppError AlreadyExists =
-        new("School.AlreadyExists", "School already exists.");
+        new("SchoolModel.AlreadyExists", "SchoolModel already exists.");
 
     public static readonly AppError CannotDelete =
-        new("School.CannotDelete", "School cannot be deleted.");
+        new("SchoolModel.CannotDelete", "SchoolModel cannot be deleted.");
 
     public static readonly AppError InUse =
-        new("School.InUse", "School is currently in use.");
+        new("SchoolModel.InUse", "SchoolModel is currently in use.");
 }
 
 public static class Product

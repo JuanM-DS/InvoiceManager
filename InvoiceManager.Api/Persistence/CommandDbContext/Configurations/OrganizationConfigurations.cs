@@ -2,23 +2,23 @@ using InvoiceManager.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InvoiceManager.Api.Persistence.EFContext.Configurations
+namespace InvoiceManager.Api.Persistence.CommandDbContext.Configurations
 {
-    public class ContractConfigurations : IEntityTypeConfiguration<Contract>
+    public class OrganizationConfigurations : IEntityTypeConfiguration<Organization>
     {
-        public void Configure(EntityTypeBuilder<Contract> builder)
+        public void Configure(EntityTypeBuilder<Organization> builder)
         {
-            builder.ToTable("Contract");
+            builder.ToTable("Organization");
             builder.HasKey(x => x.Id)
                    .IsClustered();
             builder.Property(x => x.Id)
                    .ValueGeneratedOnAdd();
 
-            builder.Property(x => x.Nombre).HasMaxLength(150).IsRequired();
-
-            builder.HasOne(x => x.Organization)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Property(x => x.Name).HasMaxLength(150).IsRequired();
+            builder.Property(x => x.OrganizationType)
+                   .IsRequired();
+            builder.Property(x => x.ContractStatus)
+                   .IsRequired();
 
             builder.Property(x => x.CreatedAt).IsRequired();
             builder.Property(x => x.CreatedBy).HasMaxLength(150).IsRequired();

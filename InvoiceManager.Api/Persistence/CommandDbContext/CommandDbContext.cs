@@ -1,9 +1,9 @@
 ﻿using InvoiceManager.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InvoiceManager.Api.Persistence.EFContext
+namespace InvoiceManager.Api.Persistence.DbContexts
 {
-    public class MainContext(DbContextOptions options) : DbContext(options)
+    public class CommandDbContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
@@ -16,7 +16,7 @@ namespace InvoiceManager.Api.Persistence.EFContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(MainContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CommandDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
     }
