@@ -12,11 +12,17 @@ namespace InvoiceManager.Api.Middlewares
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
             using var scope = serviceScopeFactory.CreateAsyncScope();
-            var _logService = scope.ServiceProvider.GetRequiredService<ILogService>();
+            var logService = scope.ServiceProvider.GetRequiredService<ILogService>();
 
-            var response = new AppResponse();
+            if (httpContext.Response.HasStarted)
+            {
+                logService.Error("Response already started", exception);
+                return false;
+            }
 
-            if(exception is AppException appEx)
+            AppResponse response;
+
+            if (exception is AppException appEx)
             {
                 response = appEx.AppResponse;
             }
@@ -24,10 +30,15 @@ namespace InvoiceManager.Api.Middlewares
             {
                 response = Error.Unexpected.InternalServerError();
             }
+
+            httpContext.Response.Clear();
             httpContext.Response.StatusCode = (int)response.HttpStatusCode;
             httpContext.Response.ContentType = "application/json";
+
             await httpContext.Response.WriteAsJsonAsync(response, cancellationToken);
-            _logService.Error(response.Errors!.First(), exception);
+
+            logService.Error(response.Errors!.First(), exception);
+
             return true;
         }
     }

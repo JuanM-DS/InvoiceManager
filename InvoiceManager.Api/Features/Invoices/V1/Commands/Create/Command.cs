@@ -4,8 +4,8 @@ using MediatR;
 
 namespace InvoiceManager.Api.Features.Invoices.V1.Commands.Create
 {
-    public sealed record CreateInvoiceCommand(List<CreateInvoiceItem> Invoices) : IRequest<AppResponse<Empty>>;
-    public sealed record CreateInvoiceItem(
+    public sealed record Command(List<InvoiceItem> Invoices) : IRequest<AppResponse<Empty>>;
+    public sealed record InvoiceItem(
             int RationsDelivered,
             DateTime DeliveredAt,
             Guid SchoolId,

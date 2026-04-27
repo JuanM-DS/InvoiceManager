@@ -2,9 +2,9 @@
 
 namespace InvoiceManager.Api.Features.Invoices.V1.Commands.Create
 {
-    public static class CreateInvoiceCommandMapper
+    public static class Mapper
     {
-        public static List<Invoice> Map(this List<CreateInvoiceItem> createInvoices)
+        public static List<Invoice> Map(this List<InvoiceItem> createInvoices)
             => createInvoices.Select(x => new Invoice
             {
                 RationsDelivered = x.RationsDelivered,

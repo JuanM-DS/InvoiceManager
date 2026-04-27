@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace InvoiceManager.Api.Domain.Errors
 {
-    public record AppError(string Menssage, string? Property = null)
+    public record AppError(string Menssage, string? Key = null, string? Property = null)
     {
         public static AppError Create(string Menssage)
             => new(Menssage);

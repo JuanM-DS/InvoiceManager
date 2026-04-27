@@ -1,7 +1,9 @@
-﻿using FluentValidation;
+﻿using Asp.Versioning;
+using FluentValidation;
 using InvoiceManager.Api.Application.Behaviors;
 using InvoiceManager.Api.Application.Interfaces;
 using InvoiceManager.Api.Extensions;
+using InvoiceManager.Api.Features.Abstractions;
 using InvoiceManager.Api.Infrastructure;
 using InvoiceManager.Api.Middlewares;
 using InvoiceManager.Api.Persistence.Command.Context;
@@ -9,6 +11,7 @@ using InvoiceManager.Api.Persistence.Interceptors;
 using InvoiceManager.Api.Persistence.Query.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Serilog;
 
 namespace InvoiceManager.Api.Extensions
@@ -17,12 +20,14 @@ namespace InvoiceManager.Api.Extensions
     {
         public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddExceptionHandler<GlobalExceptionHandler>()
+            services.AddEndpoints()
+                    .AddApiVersioning()
+                    .AddExceptionHandler<GlobalExceptionHandler>()
                     .AddDataBaseDescriptors(configuration)
                     .AddScoped<ILogService, LogService>()
                     .AddValidations()
                     .AddMediatR();
-            
+
             return services;
         }
         public static WebApplicationBuilder AddWebApplicationBuilderExt(this WebApplicationBuilder builder)
@@ -83,6 +88,27 @@ namespace InvoiceManager.Api.Extensions
         private static IServiceCollection AddValidations(this IServiceCollection services)
         {
             services.AddValidatorsFromAssemblyContaining(typeof(Program));
+
+            return services;
+        }
+        private static IServiceCollection AddEndpoints(this IServiceCollection services)
+        {
+            ServiceDescriptor[] descriptors = [..typeof(Program).Assembly.DefinedTypes
+                .Where(x=>x.IsAssignableTo(typeof(IEndpoint)) && x.IsClass && !x.IsAbstract)
+                .Select(x=>new ServiceDescriptor(typeof(IEndpoint), x, ServiceLifetime.Scoped))];
+
+            services.TryAddEnumerable(descriptors);
+            return services;
+        }
+        private static IServiceCollection AddApiVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1.0);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true;
+                options.ApiVersionReader = new UrlSegmentApiVersionReader();
+            });
 
             return services;
         }

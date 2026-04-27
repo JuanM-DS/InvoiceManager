@@ -8,11 +8,11 @@ using System.Net;
 
 namespace InvoiceManager.Api.Features.Invoices.V1.Commands.Create
 {
-    public sealed class CreateInvoiceCommandHandler(CommandDbContext dbContext) : IRequestHandler<CreateInvoiceCommand, AppResponse<Empty>>
+    public sealed class Handler(CommandDbContext dbContext) : IRequestHandler<Command, AppResponse<Empty>>
     {
         private readonly CommandDbContext _dbContext = dbContext;
 
-        public async Task<AppResponse<Empty>> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
+        public async Task<AppResponse<Empty>> Handle(Command request, CancellationToken cancellationToken)
         {
             try
             {
@@ -21,28 +21,21 @@ namespace InvoiceManager.Api.Features.Invoices.V1.Commands.Create
                 var productIds = request.Invoices.Select(x => x.ProductId).Distinct();
                 var contractIds = request.Invoices.Select(x => x.ContractId).Distinct();
 
-                var schoolsTask = _dbContext.Schools
+                var schools = await _dbContext.Schools
                     .Where(x => schoolIds.Contains(x.Id))
                     .ToDictionaryAsync(x => x.Id, cancellationToken);
 
-                var suppliersTask = _dbContext.Suppliers
+                var suppliers = await _dbContext.Suppliers
                     .Where(x => supplierIds.Contains(x.Id))
                     .ToDictionaryAsync(x => x.Id, cancellationToken);
 
-                var productsTask = _dbContext.Products
+                var products = await _dbContext.Products
                     .Where(x => productIds.Contains(x.Id))
                     .ToDictionaryAsync(x => x.Id, cancellationToken);
 
-                var contractSchoolsTask = _dbContext.contractSchools
+                var contractSchools = await _dbContext.contractSchools
                     .Where(x => contractIds.Contains(x.ContractId))
                     .ToListAsync(cancellationToken);
-
-                await Task.WhenAll(schoolsTask, suppliersTask, productsTask, contractSchoolsTask);
-
-                var schools = schoolsTask.Result;
-                var suppliers = suppliersTask.Result;
-                var products = productsTask.Result;
-                var contractSchools = contractSchoolsTask.Result;
 
                 // grouping per day (business rule)
                 var invoicesPerDay = request.Invoices.GroupBy(x => x.DeliveredAt);
@@ -56,19 +49,19 @@ namespace InvoiceManager.Api.Features.Invoices.V1.Commands.Create
                         // school validation
                         if (!schools.TryGetValue(invoice.SchoolId, out var school))
                             return AppError.Create("The school does not exist")
-                                .For<CreateInvoiceItem>(x => x.SchoolId)
+                                .For<InvoiceItem>(x => x.SchoolId)
                                 .Badrequest();
 
                         // supplier validation
                         if (!suppliers.ContainsKey(invoice.SupplierId))
                             return AppError.Create("The supplier does not exist")
-                                .For<CreateInvoiceItem>(x => x.SupplierId)
+                                .For<InvoiceItem>(x => x.SupplierId)
                                 .Badrequest();
 
                         // product validation
                         if (!products.ContainsKey(invoice.ProductId))
                             return AppError.Create("The product does not exist")
-                                .For<CreateInvoiceItem>(x => x.ProductId)
+                                .For<InvoiceItem>(x => x.ProductId)
                                 .Badrequest();
 
                         var exisinovice = await _dbContext.Invoices.FirstOrDefaultAsync(x =>
@@ -79,14 +72,14 @@ namespace InvoiceManager.Api.Features.Invoices.V1.Commands.Create
 
                         if (exisinovice is not null)
                             return AppError.Create($"This invoice: {exisinovice.InvoiceNumber} already exists ")
-                                .For<CreateInvoiceItem>(x => x.SchoolId)
+                                .For<InvoiceItem>(x => x.SchoolId)
                                 .Badrequest();
 
                         // business rule: rations limit
                         if (invoice.RationsDelivered > school.RationsNumber)
                             return AppError.Create(
                                     $"Delivered rations must not exceed assigned rations: {school.RationsNumber}")
-                                .For<CreateInvoiceItem>(x => x.RationsDelivered)
+                                .For<InvoiceItem>(x => x.RationsDelivered)
                                 .Badrequest();
 
                         // contract order validation
@@ -98,13 +91,13 @@ namespace InvoiceManager.Api.Features.Invoices.V1.Commands.Create
 
                         if (currentSchoolOrder is null)
                             return AppError.Create("School is not part of the contract")
-                                .For<CreateInvoiceItem>(x => x.SchoolId)
+                                .For<InvoiceItem>(x => x.SchoolId)
                                 .Badrequest();
 
                         if (previousOrder.HasValue && previousOrder.Value != currentSchoolOrder - 1)
                             return AppError.Create(
                                     $"The order of schools for {invoice.DeliveredAt} is wrong")
-                                .For<CreateInvoiceItem>(x => x.SchoolId)
+                                .For<InvoiceItem>(x => x.SchoolId)
                                 .Badrequest();
 
                         previousOrder = currentSchoolOrder;

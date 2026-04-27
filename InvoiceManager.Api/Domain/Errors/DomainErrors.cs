@@ -3,80 +3,80 @@
 public static class Error
 {
     public static readonly AppError NotFound =
-        new("General.NotFound", "Resource not found.");
+        new("Resource not found.", "General.NotFound");
 
     public static readonly AppError AlreadyExists =
-        new("General.AlreadyExists", "Resource already exists.");
+        new("Resource already exists.", "General.AlreadyExists");
 
     public static readonly AppError Conflict =
-        new("General.Conflict", "A conflict occurred with the current state.");
+        new("A conflict occurred with the current state.", "General.Conflict");
 
     public static readonly AppError CannotDelete =
-        new("General.CannotDelete", "Resource cannot be deleted.");
+        new("Resource cannot be deleted.", "General.CannotDelete");
 
     public static readonly AppError InUse =
-        new("General.InUse", "Resource is currently in use.");
+        new("Resource is currently in use.", "General.InUse");
 
     public static readonly AppError Unexpected =
-        new("General.Unexpected", "An unexpected error occurred.");
+        new("An unexpected error occurred.", "General.Unexpected");
 }
 
 public static class InvoiceError
 {
     public static readonly AppError NotFound =
-        new("Invoice.NotFound", "Invoice not found.");
+        new("Invoice not found.", "Invoice.NotFound");
 
     public static readonly AppError AlreadyExists =
-        new("Invoice.AlreadyExists", "Invoice already exists.");
+        new("Invoice already exists.", "Invoice.AlreadyExists");
 
     public static readonly AppError CannotDelete =
-        new("Invoice.CannotDelete", "Invoice cannot be deleted.");
+        new("Invoice cannot be deleted.", "Invoice.CannotDelete");
 
     public static readonly AppError Conflict =
-        new("Invoice.Conflict", "Invoice is in an invalid state.");
+        new("Invoice is in an invalid state.", "Invoice.Conflict");
 }
 
 public static class SupplierError
 {
     public static readonly AppError NotFound =
-        new("Supplier.NotFound", "Supplier not found.");
+        new("Supplier not found.", "Supplier.NotFound");
 
     public static readonly AppError AlreadyExists =
-        new("Supplier.AlreadyExists", "Supplier already exists.");
+        new("Supplier already exists.", "Supplier.AlreadyExists");
 
     public static readonly AppError CannotDelete =
-        new("Supplier.CannotDelete", "Supplier cannot be deleted.");
+        new("Supplier cannot be deleted.", "Supplier.CannotDelete");
 
     public static readonly AppError InUse =
-        new("Supplier.InUse", "Supplier is currently in use.");
+        new("Supplier is currently in use.", "Supplier.InUse");
 }
 
 public static class SchoolError
 {
     public static readonly AppError NotFound =
-        new("School.NotFound", "School not found.");
+        new("School not found.", "School.NotFound");
 
     public static readonly AppError AlreadyExists =
-        new("School.AlreadyExists", "School already exists.");
+        new("School already exists.", "School.AlreadyExists");
 
     public static readonly AppError CannotDelete =
-        new("School.CannotDelete", "School cannot be deleted.");
+        new("School cannot be deleted.", "School.CannotDelete");
 
     public static readonly AppError InUse =
-        new("School.InUse", "School is currently in use.");
+        new("School is currently in use.", "School.InUse");
 }
 
 public static class ProductError
 {
     public static readonly AppError NotFound =
-        new("Product.NotFound", "Product not found.");
+        new("Product not found.", "Product.NotFound");
 
     public static readonly AppError AlreadyExists =
-        new("Product.AlreadyExists", "Product already exists.");
+        new("Product already exists.", "Product.AlreadyExists");
 
     public static readonly AppError CannotDelete =
-        new("Product.CannotDelete", "Product cannot be deleted.");
+        new("Product cannot be deleted.", "Product.CannotDelete");
 
     public static readonly AppError InUse =
-        new("Product.InUse", "Product is currently in use.");
+        new("Product is currently in use.", "Product.InUse");
 }

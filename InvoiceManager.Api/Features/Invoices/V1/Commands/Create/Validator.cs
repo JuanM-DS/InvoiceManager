@@ -2,9 +2,9 @@
 
 namespace InvoiceManager.Api.Features.Invoices.V1.Commands.Create
 {
-    public sealed class CreateInvoiceCommandValidator : AbstractValidator<CreateInvoiceCommand>
+    public sealed class Validator : AbstractValidator<Command>
     {
-        public CreateInvoiceCommandValidator()
+        public Validator()
         {
             RuleForEach(x => x.Invoices)
                 .ChildRules(item =>

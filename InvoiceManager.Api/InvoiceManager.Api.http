@@ -1,6 +1,18 @@
 @InvoiceManager.Api_HostAddress = http://localhost:5069
 
-GET {{InvoiceManager.Api_HostAddress}}/weatherforecast/
+POST {{InvoiceManager.Api_HostAddress}}/Api/V1/Invoices
+Content-Type: application/json
 Accept: application/json
-
+{
+  "invoices": [
+    {
+      "rationsDelivered": 120,
+      "deliveredAt": "2026-04-27T10:30:00Z",
+      "schoolId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "supplierId": "7c9e6679-7425-40de-944b-e07fc1f90ae7",
+      "productId": "1c9d5c84-6b3e-4f52-9c1f-9d5f3c2a7b11",
+      "contractId": "9a7b330e-6f4f-4f2a-8c4e-123456789abc"
+    }
+  ]
+}
 ###
