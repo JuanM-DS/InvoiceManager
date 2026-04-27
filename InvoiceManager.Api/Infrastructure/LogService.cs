@@ -1,5 +1,5 @@
-﻿using InvoiceManager.Api.Domain.Errors;
-using InvoiceManager.Api.Domain.Interfaces;
+﻿using InvoiceManager.Api.Application.Interfaces;
+using InvoiceManager.Api.Domain.Errors;
 using Serilog;
 
 namespace InvoiceManager.Api.Infrastructure

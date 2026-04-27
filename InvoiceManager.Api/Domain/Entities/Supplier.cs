@@ -7,11 +7,11 @@ namespace InvoiceManager.Api.Domain.Entities
         public string Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string TaxNumber { get; set; } = string.Empty;
-        public Guid AddresId { get; set; }
+        public Guid AddressId { get; set; }
 
         public Address Address { get; set; } = null!;
         public ICollection<PhoneNumber> PhoneNumbers { get; set; } = [];
-
+        public ICollection<Contract> Contracts { get; set; } = [];
         #region Auditable
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; } = string.Empty;

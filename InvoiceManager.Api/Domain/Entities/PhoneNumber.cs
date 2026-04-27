@@ -5,8 +5,10 @@ namespace InvoiceManager.Api.Domain.Entities
 {
     public class PhoneNumber : BaseEntity, IAuditable
     {
-        public int Number { get; set; }
+        public string Number { get; set; } = string.Empty;
         public PhoneNumberType Type { get; set; }
+        public OwnerType OwnerType { get; set; }
+        public Guid OwnerId { get; set; }
 
         #region Auditable
         public DateTime CreatedAt { get; set; }

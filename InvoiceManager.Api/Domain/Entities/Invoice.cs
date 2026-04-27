@@ -6,6 +6,7 @@ namespace InvoiceManager.Api.Domain.Entities
     {
         public int RationsDelivered { get; set; }
         public int InvoiceNumber { get; set; }
+        public DateTime DeliveredAt { get; set; }
         public Guid SchoolId { get; set; }
         public Guid SupplierId { get; set; }
         public Guid ProductId { get; set; }

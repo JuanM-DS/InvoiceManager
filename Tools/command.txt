@@ -1,0 +1,3 @@
+tree /A /F | findstr /V "bin obj Debug .git .vs" > estructura.txt
+
+tree /F /A | findstr /V "bin obj .git .vs" | python Tools/FileTree.py > diagrama.txt

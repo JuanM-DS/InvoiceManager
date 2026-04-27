@@ -21,22 +21,22 @@ public static class Error
         new("General.Unexpected", "An unexpected error occurred.");
 }
 
-public static class Invoice
+public static class InvoiceError
 {
     public static readonly AppError NotFound =
-        new("InvoiceModel.NotFound", "InvoiceModel not found.");
+        new("Invoice.NotFound", "Invoice not found.");
 
     public static readonly AppError AlreadyExists =
-        new("InvoiceModel.AlreadyExists", "InvoiceModel already exists.");
+        new("Invoice.AlreadyExists", "Invoice already exists.");
 
     public static readonly AppError CannotDelete =
-        new("InvoiceModel.CannotDelete", "InvoiceModel cannot be deleted.");
+        new("Invoice.CannotDelete", "Invoice cannot be deleted.");
 
     public static readonly AppError Conflict =
-        new("InvoiceModel.Conflict", "InvoiceModel is in an invalid state.");
+        new("Invoice.Conflict", "Invoice is in an invalid state.");
 }
 
-public static class Supplier
+public static class SupplierError
 {
     public static readonly AppError NotFound =
         new("Supplier.NotFound", "Supplier not found.");
@@ -51,22 +51,22 @@ public static class Supplier
         new("Supplier.InUse", "Supplier is currently in use.");
 }
 
-public static class School
+public static class SchoolError
 {
     public static readonly AppError NotFound =
-        new("SchoolModel.NotFound", "SchoolModel not found.");
+        new("School.NotFound", "School not found.");
 
     public static readonly AppError AlreadyExists =
-        new("SchoolModel.AlreadyExists", "SchoolModel already exists.");
+        new("School.AlreadyExists", "School already exists.");
 
     public static readonly AppError CannotDelete =
-        new("SchoolModel.CannotDelete", "SchoolModel cannot be deleted.");
+        new("School.CannotDelete", "School cannot be deleted.");
 
     public static readonly AppError InUse =
-        new("SchoolModel.InUse", "SchoolModel is currently in use.");
+        new("School.InUse", "School is currently in use.");
 }
 
-public static class Product
+public static class ProductError
 {
     public static readonly AppError NotFound =
         new("Product.NotFound", "Product not found.");
